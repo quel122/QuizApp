@@ -1,5 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap'); 
 /* Your styles should be mobile-first and responsive */
-
+* {
+  font-family: Rowdies;
+}
+.introView, .head {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.introView {
+  padding: 50px;
+  border-style: inset;
+  border
+}
+.head {
+  padding: 40px;
+  background-color: #9999ff;
+  color: white;
+}
+.questionView {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  border-style: solid;
+  border-color: red;
+}
+button,
+input {
+  background-color: #9999ff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  font-size: 15px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 8px;
+}
+button:hover,
+input:hover {
+  background-color: white;
+  color: #9999ff;
+}
 /** 
   * If you are unclear on how to utilize a mobile-first, responsive technique to write your CSS, here is an example: 
   *
