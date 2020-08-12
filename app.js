@@ -83,7 +83,7 @@ function introView(){
   return `
   <div class="introView">
       <h2>Score ${Math.round(store['questions'].length/2)}/${store['questions'].length} to win!</h2>
-      <button id="start">Start</button>
+      <button id="start">START</button>
     </div>
   `;
 }
@@ -118,10 +118,10 @@ function questionView(){
 function feedbackView(){
   return `
   <div class="feedbackView">
-      <p>${store['feedback'] ? 'Correct!': 'Incorrect!'}</p>
-      <p>${!store['feedback'] ? `The correct answer was: `: 'Good Job!'}</p>
-      <button id="continue">Continue</button>
-    </div>
+    <h2>${store['feedback'] ? 'Correct!': 'Incorrect!'}</h2>
+    <p>${!store['feedback'] ? `The correct answer was: ${store['questions'][store['questionNumber'] - 1]['correctAnswer']}`: 'Good Job!'}</p>
+    <button id="continue">CONTINUE</button>
+  </div>
   `;
 }
 
@@ -144,7 +144,8 @@ function resultsView(){
           </li>
         </ul>
       </div>
-      <p>${store['score'] >= 3 ? winMessage : loseMessage} Press the button below to start a new game!</p>
+      <p>${store['score'] >= 3 ? winMessage : loseMessage}</p>
+      <p>Press the button below to start a new game!</p>
       <button id="new">NEW GAME</button>
     </div>
   `;
