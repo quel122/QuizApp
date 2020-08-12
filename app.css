@@ -1,35 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap'); 
 /* Your styles should be mobile-first and responsive */
-* {
-  font-family: Rowdies;
-}
-.introView, .head {
+body {
+  max-width: 900px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  margin: auto;
+  background-color: #000;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-.introView {
-  padding: 50px;
-  border-style: inset;
-  border
+
+header h1 {
+  text-align: center;
+  color: #fff;
 }
-.head {
-  padding: 40px;
-  background-color: #9999ff;
-  color: white;
-}
-.questionView {
+
+main {
   display: flex;
-  flex-direction: column;
-  padding: 50px;
-  border-style: solid;
-  border-color: red;
+  justify-content: center;
 }
-button,
-input {
-  background-color: #9999ff;
-  color: white;
+
+button, input[type = button] {
+  margin: 10px 0;
+  background-color: #9999ff; 
+  color: white; 
   border: none;
   padding: 8px 15px;
   font-size: 15px;
@@ -37,10 +30,79 @@ input {
   outline: none;
   border-radius: 8px;
 }
-button:hover,
-input:hover {
-  background-color: white;
-  color: #9999ff;
+
+button:hover, input[type = button]:hover, button:active, input[type = button]:active { 
+  background-color: white; 
+  color: #9999ff; 
+}
+
+.introView {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+  width: 100%;
+  padding: 30px;
+  background-color: #ddd;
+}
+
+.introView h2 {
+  font-size: 24px;
+}
+
+.feedbackView {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.questionView {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.questionView h1 {
+  color: #fff;
+}
+
+.questionContainer {
+  background-color: #ddd;
+  padding: 0 10px;
+}
+
+.questionContainer input[type = radio] {
+  margin-bottom: 10px;
+}
+
+.feedbackView {
+  background-color: #ddd;
+  padding-bottom: 30px;
+}
+
+.resultsView {
+  background-color: #ddd;
+  padding-bottom: 30px;
+  padding: 20px;
+}
+
+.resultsContainer {
+  background-color: #aaa;
+  padding: 10px;
+}
+
+.resultsContainer h2 {
+  text-align: center;
+}
+
+.resultsContainer li {
+  list-style: square;
 }
 /** 
   * If you are unclear on how to utilize a mobile-first, responsive technique to write your CSS, here is an example: 
