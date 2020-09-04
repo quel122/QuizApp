@@ -13,7 +13,7 @@ let store = {
         'Installation 08',
         'Installation 04'
       ],
-      correctAnswer: 'c'
+      correctAnswer: 'C'
     },
     {
       question: 'What city did the Locust attack occur in at the start of Gears of War 2?',
@@ -23,7 +23,7 @@ let store = {
         'Tyrus',
         'Jacinto City'
       ],
-      correctAnswer: 'd'
+      correctAnswer: 'D'
     },
     {
       question: 'What was the name of the town that Mario had to clean up while on vacation?',
@@ -33,7 +33,7 @@ let store = {
         'Toad Town',
         'Cheep-Cheep Island',
       ],
-      correctAnswer: 'b'
+      correctAnswer: 'B'
     },
     {
       question: 'What is Sonic the Hedgehog\'s nemesis name?',
@@ -43,7 +43,7 @@ let store = {
         'Rouge',
         'Dr. Eggman',
       ],
-      correctAnswer: 'd'
+      correctAnswer: 'D'
     },
     {
       question: 'Where is Link from?',
@@ -53,7 +53,7 @@ let store = {
         'Hyrule',
         'Gerudo Valley',
       ],
-      correctAnswer: 'b'
+      correctAnswer: 'B'
     },
   ],
   quizStarted: false,
@@ -96,34 +96,40 @@ function questionView(){
       <div class="questionContainer">
         <p>${questions[store['questionNumber']]['question']}</p>
         <form action="/">
-          <input type="radio" name="selection" id="a" value="a">
-          <label for="a">A. ${questions[store['questionNumber']]['answers'][0]}</label>
+          <input type="radio" name="selection" id="A" value="A">
+          <label for="A">A. ${questions[store['questionNumber']]['answers'][0]}</label>
           <br>
-          <input type="radio" name="selection" id="b" value="b">
-          <label for="b">B. ${questions[store['questionNumber']]['answers'][1]}</label>
+          <input type="radio" name="selection" id="B" value="B">
+          <label for="B">B. ${questions[store['questionNumber']]['answers'][1]}</label>
           <br>
-          <input type="radio" name="selection" id="c" value="c">
-          <label for="c">C. ${questions[store['questionNumber']]['answers'][2]}</label>
+          <input type="radio" name="selection" id="C" value="C">
+          <label for="C">C. ${questions[store['questionNumber']]['answers'][2]}</label>
           <br>
-          <input type="radio" name="selection" id="d" value="d">
-          <label for="d">D. ${questions[store['questionNumber']]['answers'][3]}</label>
+          <input type="radio" name="selection" id="D" value="D">
+          <label for="D">D. ${questions[store['questionNumber']]['answers'][3]}</label>
           <br>
-          ${store['questionNumber'] === 4 ? `<input type="button" name="final-submit" id="final" value="SUBMIT FINAL RESULTS">` : `<input type="button" name="next-submit" id="next" value="SUBMIT">`}
+          <input type="button" name="next-submit" id="next" value="SUBMIT">
+          <div id="error"></div>
         </form>
+        <div class="current-score">
+          <p>Current Score: ${store['score']}/ 5</p>
+        </div>
       </div>
     </div>
   `;
 }
 
 function feedbackView(){
+  let questions = store['questions']
   return `
   <div class="feedbackView">
     <h2>${store['feedback'] ? 'Correct!': 'Incorrect!'}</h2>
     <p>${!store['feedback'] ? `The correct answer was: ${store['questions'][store['questionNumber'] - 1]['correctAnswer']}`: 'Good Job!'}</p>
-    <button id="continue">CONTINUE</button>
+    ${store['questionNumber'] === 5 ? `<button id="final">SUBMIT FINAL RESULTS</button>` : `<button id="continue">CONTINUE</button>`}
+    
   </div>
   `;
-}
+};
 
 function resultsView(){
   let winMessage = 'Congratulations!';
@@ -194,8 +200,13 @@ function handleStart(){
 
 function handleNext(){
   $('main').on('click', '#next', function(event){
-    submitAnswer();
-    renderModel();
+    if(typeof($('input[name=selection]:checked').val()) != "undefined"){
+      submitAnswer();
+      renderModel();  
+    }else{
+      $('#error').html("You have to select an answer");
+    };
+    
   });
 }
 
