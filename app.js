@@ -13,7 +13,7 @@ let store = {
         'Installation 08',
         'Installation 04'
       ],
-      correctAnswer: 'C'
+      correctAnswer: 'Installation 08'
     },
     {
       question: 'What city did the Locust attack occur in at the start of Gears of War 2?',
@@ -23,7 +23,7 @@ let store = {
         'Tyrus',
         'Jacinto City'
       ],
-      correctAnswer: 'D'
+      correctAnswer: 'Jacinto City'
     },
     {
       question: 'What was the name of the town that Mario had to clean up while on vacation?',
@@ -33,7 +33,7 @@ let store = {
         'Toad Town',
         'Cheep-Cheep Island',
       ],
-      correctAnswer: 'B'
+      correctAnswer: 'Delfino Island'
     },
     {
       question: 'What is Sonic the Hedgehog\'s nemesis name?',
@@ -43,7 +43,7 @@ let store = {
         'Rouge',
         'Dr. Eggman',
       ],
-      correctAnswer: 'D'
+      correctAnswer: 'Dr. Eggman'
     },
     {
       question: 'Where is Link from?',
@@ -53,14 +53,15 @@ let store = {
         'Hyrule',
         'Gerudo Valley',
       ],
-      correctAnswer: 'B'
+      correctAnswer: 'Kakariko Forest'
     },
   ],
   quizStarted: false,
   questionNumber: 0,
   score: 0,
   feedback: false,
-  feedbackScreen: false
+  feedbackScreen: false,
+  final: false
 };
 /**
  * 
@@ -90,22 +91,23 @@ function introView(){
 
 function questionView(){
   let questions = store['questions'];
+  
   return `
   <div class="questionView">
       <h1>Question ${store['questionNumber'] + 1} of 5</h1>
       <div class="questionContainer">
         <p>${questions[store['questionNumber']]['question']}</p>
         <form action="/">
-          <input type="radio" name="selection" id="A" value="A">
+          <input type="radio" name="selection" id="A" value='${questions[store['questionNumber']]['answers'][0]}'>
           <label for="A">A. ${questions[store['questionNumber']]['answers'][0]}</label>
           <br>
-          <input type="radio" name="selection" id="B" value="B">
+          <input type="radio" name="selection" id="B" value='${questions[store['questionNumber']]['answers'][1]}'>
           <label for="B">B. ${questions[store['questionNumber']]['answers'][1]}</label>
           <br>
-          <input type="radio" name="selection" id="C" value="C">
+          <input type="radio" name="selection" id="C" value='${questions[store['questionNumber']]['answers'][2]}'>
           <label for="C">C. ${questions[store['questionNumber']]['answers'][2]}</label>
           <br>
-          <input type="radio" name="selection" id="D" value="D">
+          <input type="radio" name="selection" id="D" value='${questions[store['questionNumber']]['answers'][3]}'>
           <label for="D">D. ${questions[store['questionNumber']]['answers'][3]}</label>
           <br>
           <input type="button" name="next-submit" id="next" value="SUBMIT">
@@ -124,7 +126,7 @@ function feedbackView(){
   return `
   <div class="feedbackView">
     <h2>${store['feedback'] ? 'Correct!': 'Incorrect!'}</h2>
-    <p>${!store['feedback'] ? `The correct answer was: ${store['questions'][store['questionNumber'] - 1]['correctAnswer']}`: 'Good Job!'}</p>
+    <p>${!store['feedback'] ? `The correct answer was: ${store['questions'][store['questionNumber'] - 1]['correctAnswer']}`:` Good Job! ${store['questions'][store['questionNumber'] - 1]['correctAnswer']} is the correct answer!`}</p>
     ${store['questionNumber'] === 5 ? `<button id="final">SUBMIT FINAL RESULTS</button>` : `<button id="continue">CONTINUE</button>`}
     
   </div>
@@ -161,10 +163,11 @@ function resultsView(){
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 function renderModel(){
   //todo
+  console.log(store.questionNumber)
   if(store['quizStarted'] === false){
     $('main').html(introView);
   }
-  else if(store['questionNumber'] === 5){
+  else if(store.final === true){
     $('main').html(resultsView);
   }
   else if(store['feedbackScreen'] === true){
@@ -178,15 +181,18 @@ function renderModel(){
 
 /********** EVENT HANDLER FUNCTIONS **********/
 // These functions handle events (submit, click, etc)
+
+
 function submitAnswer(){
+  
   if($('input[name=selection]:checked').val() === store['questions'][store['questionNumber']]['correctAnswer']){
     store['feedback'] = true;
-    store['questionNumber']++;
+    
     store['score']++;
   }
   else{
     store['feedback'] = false;
-    store['questionNumber']++;
+    
   }
   store['feedbackScreen'] = true;
 }
@@ -202,6 +208,7 @@ function handleNext(){
   $('main').on('click', '#next', function(event){
     if(typeof($('input[name=selection]:checked').val()) != "undefined"){
       submitAnswer();
+      store['questionNumber']++;
       renderModel();  
     }else{
       $('#error').html("You have to select an answer");
@@ -219,7 +226,7 @@ function handleContinue(){
 
 function handleSubmit(){
   $('main').on('click', '#final', function(event){
-    submitAnswer();
+    store.final = true;
     renderModel();
   });
 }
@@ -230,11 +237,13 @@ function handleNewGame(){
     store['questionNumber'] = 0;
     store['feedbackScreen'] = false;
     store['quizStarted'] = false;
+    store.final = false;
     renderModel();
   });
 }
 
 function main(){
+  
   renderModel();
   handleStart();
   handleNext();
